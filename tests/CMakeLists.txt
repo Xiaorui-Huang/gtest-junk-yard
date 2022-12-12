@@ -39,7 +39,7 @@ macro(package_add_test_with_libraries TESTNAME)
 endmacro()
 
 # Set up dependencies
-#SET(REQUIRED_LIBRARIES core)
+SET(REQUIRED_LIBRARIES core)
 
 # list of tests
 
@@ -51,10 +51,26 @@ endmacro()
     ## package_add_test(${FILENAME} ${FILENAME}.cpp)
 #endforeach()
 
-add_executable(sample4_test sample4_test.cpp)
-target_link_libraries(sample4_test gtest_main core)
-gtest_discover_tests(sample4_test)
+# step 1
 
-add_executable(test_486_medium_predict_the_winner test_486_medium_predict_the_winner.cpp)
-target_link_libraries(test_486_medium_predict_the_winner gtest_main core)
-gtest_discover_tests(test_486_medium_predict_the_winner)
+#add_executable(sample4_test sample4_test.cpp)
+#target_link_libraries(sample4_test gtest_main core)
+#gtest_discover_tests(sample4_test)
+
+#add_executable(test_486_medium_predict_the_winner test_486_medium_predict_the_winner.cpp)
+#target_link_libraries(test_486_medium_predict_the_winner gtest_main core)
+#gtest_discover_tests(test_486_medium_predict_the_winner)
+
+# step 2
+#package_add_test_with_libraries(test_486_medium_predict_the_winner ${REQUIRED_LIBRARIES})
+#package_add_test_with_libraries(sample4_test ${REQUIRED_LIBRARIES})
+
+# step 3 - done ahahahaah
+ file(GLOB TESTFILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+ foreach(TESTFILE ${TESTFILES})
+     get_filename_component(FILENAME ${TESTFILE} NAME_WLE) # this get the filename without the extension
+     #string(REGEX MATCH "[0-9]+" PROBLEM_ID ${TEST}) # match only up to the problem id
+     package_add_test_with_libraries(${FILENAME} ${REQUIRED_LIBRARIES})
+     # package_add_test(${FILENAME} ${FILENAME}.cpp)
+ endforeach()
+
