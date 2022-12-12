@@ -21,10 +21,13 @@ add_library(core ${SRCFILES})
 #endforeach()
 
 # Load Google Test
-option(PACKAGE_TESTS "Build the tests" OFF)
+option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS AND PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
     MESSAGE(STATUS "Setting Up Tests")
     enable_testing()
     include(GoogleTest)
     add_subdirectory(tests)
 endif()
+
+
+
